@@ -1,0 +1,699 @@
+import React, { useCallback, useEffect, useState } from 'react';
+import { Controller, ControllerRenderProps, UseFormReturn, useFormState, useWatch } from 'react-hook-form';
+import { Briefcase, X } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { FieldMessage } from '@/components/FieldMessage';
+import { DatePicker } from '@/components/ui/date-picker';
+import { DateTimePicker } from '@/components/ui/date-time-picker';
+import { maskCurrencyBRL } from '@/utils/Masks';
+import { DemandaCadastroJuridico } from '../../interfaces';
+import { actions } from '@/actionsV2';
+import { picklist } from '../../../picklists';
+import { toast } from '@/utils/toast';
+import { DadosProcesso } from '@/actionsV2/backend/demanda';
+import { isEqual } from '@/utils/Array';
+import { TestTube } from 'phosphor-react';
+
+interface DetalhesAcaoProps {
+  formBag: UseFormReturn<DemandaCadastroJuridico>;
+  dadosConsultaProcesso: DadosProcesso[];
+  validaDataAudiencia: (data: Date | null) => void;
+  validaDataDistribuicao: (data: Date | null) => void;
+  validaDataCitacao: (data: Date | null) => void;
+}
+
+interface Options {
+  uf: string[];
+  cidade: string[];
+  tribunais: string[];
+}
+
+const DetalhesAcaoComponent = ({
+  formBag, 
+  dadosConsultaProcesso,
+  validaDataAudiencia,
+  validaDataDistribuicao,
+  validaDataCitacao
+}: DetalhesAcaoProps) => {
+  console.log('Componente DetalhesAcao renderizado');
+
+  const { control, setValue, register } = formBag;
+
+  const [options, setOptions] = useState<Options>({
+    uf: [],
+    cidade: [],
+    tribunais: [],
+  });
+
+  const { errors } = useFormState({
+    control,
+    name: ['tipo_acao', 'acao', 'tipo_acao2', 'procedimento', 'uf', 'cidade', 'orgao_tribunal', 'data_distribuicao', 'data_citacao', 'resumo_processo', 'valor_causa', 'prazo_liminar', 'prazo_tipo', 'conteudo_liminar', 'prazo_contestacao', 'data_audiencia'],
+  });
+  
+  const values = {
+    tipo_acao: useWatch({ control, name: 'tipo_acao' }),
+    acao: useWatch({ control, name: 'acao' }),
+    tipo_acao2: useWatch({ control, name: 'tipo_acao2' }),
+    procedimento: useWatch({ control, name: 'procedimento' }),
+    uf: useWatch({ control, name: 'uf' }),
+    cidade: useWatch({ control, name: 'cidade' }),
+    tribunal: useWatch({ control, name: 'orgao_tribunal' }),
+    data_distribuicao: useWatch({ control, name: 'data_distribuicao' }),
+    data_citacao: useWatch({ control, name: 'data_citacao' }),
+    resumo_processo: useWatch({ control, name: 'resumo_processo' }),
+    valor_causa: useWatch({ control, name: 'valor_causa' }),
+    prazo_liminar: useWatch({ control, name: 'prazo_liminar' }),
+    prazo_tipo: useWatch({ control, name: 'prazo_tipo' }) || 'dias_corridos',
+    conteudo_liminar: useWatch({ control, name: 'conteudo_liminar' }),
+    prazo_contestacao: useWatch({ control, name: 'prazo_contestacao' }),
+    data_audiencia: useWatch({ control, name: 'data_audiencia' }),
+    desdobramento: useWatch({ control, name: 'desdobramento' }),
+  }
+
+  const updateOptions = useCallback((novosDados: Partial<Options>) => {
+    setOptions((prevState) => {
+      return {
+        ...prevState,
+        ...novosDados,
+      };
+    });
+  }, []);
+
+  const updateCidadesPorUf = async (uf: string | undefined) => {
+    const isUfValida = uf && uf.trim().length > 0 && picklist.ufs.find((item) => item.nome === uf?.trim());
+
+    if (!isUfValida) {
+      updateOptions({
+        uf: picklist.ufs.map((uf) => uf.nome),
+        cidade: values.cidade ? [values.cidade] : [],
+      });
+      return;
+    }
+
+    const cidades = await actions.backend.local.getCidadesPorUf({ uf });
+
+    updateOptions({
+      uf: picklist.ufs.map((uf) => uf.nome),
+      cidade: cidades,
+    });
+  };
+
+  const updateTribunaisPorUf = async (uf: string | undefined) => {
+    if (!uf || uf.trim() === '') {
+      updateOptions({
+        tribunais: picklist.orgaoTribunal,
+      });
+      return;
+    }
+
+    const tribunais = picklist.orgaoTribunal.filter((tribunal) => tribunal.includes(uf));
+
+    updateOptions({ tribunais });
+  };
+
+  const handleUfChange = (value: string, field: ControllerRenderProps<DemandaCadastroJuridico, "uf">) => {
+    field.onChange(value);
+
+    updateCidadesPorUf(value);
+    updateTribunaisPorUf(value);
+
+    setValue('cidade', '');
+    setValue('orgao_tribunal', '');
+    setValue('vara', '');
+  };
+
+  const handleDataDistribuicaoChange = (selectedDate: Date | null | undefined, field: ControllerRenderProps<DemandaCadastroJuridico, "data_distribuicao">) => {
+    validaDataDistribuicao(selectedDate ?? null);
+
+    if (!selectedDate) {
+      field.onChange('');
+      return;
+    }
+
+    field.onChange(selectedDate.toISOString());
+  };
+
+  const handleDataCitacaoChange = (selectedDate: Date | null | undefined, field: ControllerRenderProps<DemandaCadastroJuridico, "data_citacao">) => {
+    validaDataCitacao(selectedDate ?? null);
+
+    if (!selectedDate) {
+      field.onChange('');
+      return;
+    }
+
+    field.onChange(selectedDate.toISOString());
+  };
+  
+  const handlePrazoLiminarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, ''); // Remove qualquer caractere não numérico
+
+    if (value === '' || parseInt(value) > 0) {
+      setValue('prazo_liminar', value);
+    }
+  };
+
+  const handlePrazoTipoChange = () => {
+    if (values.desdobramento) {
+      return;
+    }
+
+    const prazoTipo = values.prazo_tipo;
+
+    if (prazoTipo === 'dias_corridos') {
+      setValue('prazo_tipo', 'horas_corridas');
+    }
+
+    if (prazoTipo === 'horas_corridas') {
+      setValue('prazo_tipo', 'dias_corridos');
+    }
+  };
+
+  const handleDataAudienciaChange = (selectedDate: Date | null, field: ControllerRenderProps<DemandaCadastroJuridico, "data_audiencia">) => {
+    validaDataAudiencia(selectedDate ?? null  );
+
+    if (!selectedDate) {
+      field.onChange('');
+      return;
+    }
+
+    field.onChange(selectedDate.toISOString());
+  };
+
+  useEffect(() => {  
+    if (dadosConsultaProcesso.length === 1) {
+      const uf = dadosConsultaProcesso[0].uf;
+      const tribunal = dadosConsultaProcesso[0].tribunal;
+
+      setValue('uf', uf);
+      setValue('cidade', '');
+      setValue('orgao_tribunal', tribunal);
+
+      updateCidadesPorUf(uf);
+      updateTribunaisPorUf(uf);
+
+      return;
+    }
+
+    updateCidadesPorUf(values.uf);
+    updateTribunaisPorUf(values.uf);
+  }, [dadosConsultaProcesso]);
+
+  useEffect(() => {
+    validaDataAudiencia(values?.data_audiencia ? new Date(values.data_audiencia) : null);
+    validaDataDistribuicao(values?.data_distribuicao ? new Date(values.data_distribuicao) : null);
+    validaDataCitacao(values?.data_citacao ? new Date(values.data_citacao) : null);
+  }, []);
+
+  return (
+    <div>
+      <h3 className="text-md font-medium text-gray-700 dark:text-gray-300 mb-3 flex items-center">
+        <Briefcase className="w-5 h-5 mr-2 text-green-500" />
+        <span>Detalhes da Ação</span>
+      </h3>
+
+      <div className="space-y-4 bg-green-50 dark:bg-green-950/30 p-3 rounded-md">
+        <div>
+          <Label className="block text-sm mb-1">Tipo de ação</Label>
+          <Input
+            type="text"
+            value={values.tipo_acao}
+            disabled
+            className="w-full p-2 bg-gray-100 dark:bg-gray-900 border rounded-md text-sm"
+          />
+        </div>
+
+        <div>
+          <Label className="block text-sm mb-1">Ação</Label>
+          <Input
+            type="text"
+            value={values.acao}
+            disabled
+            className="w-full p-2 bg-gray-100 dark:bg-gray-900 border rounded-md text-sm"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="tipo_acao2">Tipo de ação 2</Label>
+          <FieldMessage.Error.Root>
+            <Controller
+              name="tipo_acao2"
+              control={control}
+              render={({ field }) => (
+                <div className="flex items-center gap-2">
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    disabled={values.desdobramento}
+                  >
+                    <SelectTrigger ref={field.ref} className={errors.tipo_acao2 ? 'border-red-500' : ''}>
+                      <SelectValue placeholder="Selecione o tipo de ação 2" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Consumidor">Consumidor</SelectItem>
+                      <SelectItem value="Parceiro">Parceiro</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <X
+                    onClick={() => {
+                      field.onChange('');
+                    }}
+                    className="w-4 h-4 cursor-pointer text-gray-400 hover:text-red-500"
+                  />
+                </div>
+              )}
+            />
+            <FieldMessage.Error.Text>
+              {errors.tipo_acao2?.message}
+            </FieldMessage.Error.Text>
+          </FieldMessage.Error.Root>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="procedimento">Procedimento</Label>
+          <FieldMessage.Error.Root>
+            <Controller
+              name="procedimento"
+              control={control}
+              render={({ field }) => (
+                <div className="flex items-center gap-2">
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}                 
+                    disabled={values.desdobramento}
+                  >
+                    <SelectTrigger ref={field.ref} className={errors.procedimento ? 'border-red-500' : ''}>
+                      <SelectValue placeholder="Selecione um procedimento" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Cível">Cível</SelectItem>
+                      <SelectItem value="Juizado Especial Cível">Juizado Especial Cível</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <X
+                    onClick={() => {
+                      field.onChange('');
+                    }}
+                    className="w-4 h-4 cursor-pointer text-gray-400 hover:text-red-500"
+                  />
+                </div>
+              )}
+            />
+            <FieldMessage.Error.Text>
+              {errors.procedimento?.message}
+            </FieldMessage.Error.Text>
+          </FieldMessage.Error.Root>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="uf">UF</Label>
+          <FieldMessage.Error.Root>
+            <div className="flex items-center gap-2">
+              <Controller
+                name="uf"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => handleUfChange(value, field)}
+                    disabled={values.desdobramento}
+                  >
+                    <SelectTrigger ref={field.ref} className={errors.uf ? 'border-red-500' : ''}>
+                      <SelectValue placeholder="Selecione a UF" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {options.uf.map((uf) => (
+                        <SelectItem key={uf} value={uf}>
+                          {uf}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+
+              <X
+                onClick={() => {
+                  if (values.desdobramento) {
+                    return;
+                  }
+
+                  setValue('uf', '');
+                  setValue('cidade', '');
+                  setValue('orgao_tribunal', '');
+                  updateCidadesPorUf('');
+                  updateTribunaisPorUf('');
+                }}
+                className="w-4 h-4 cursor-pointer text-gray-400 hover:text-red-500"
+              />
+            </div>
+            <FieldMessage.Error.Text>
+              {errors.uf?.message}
+            </FieldMessage.Error.Text>
+          </FieldMessage.Error.Root>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="cidade">Cidade</Label>
+          <FieldMessage.Error.Root>
+            <div className="flex items-center gap-2">
+              <Controller
+                name="cidade"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}                 
+                    disabled={values.desdobramento}
+                  >
+                    <SelectTrigger ref={field.ref} className={errors.cidade ? 'border-red-500' : ''}>
+                      <SelectValue placeholder="Selecione uma cidade" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {options.cidade.map((cidade) => (
+                        <SelectItem key={cidade} value={cidade}>
+                          {cidade}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+
+              <X
+                onClick={() => {
+                  if (values.desdobramento) {
+                    return;
+                  }
+
+                  setValue('cidade', '');
+                }}
+                className="w-4 h-4 cursor-pointer text-gray-400 hover:text-red-500"
+              />
+            </div>
+            <FieldMessage.Error.Text>
+              {errors.cidade?.message}
+            </FieldMessage.Error.Text>
+          </FieldMessage.Error.Root>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="tribunal">Órgão / Tribunal</Label>
+          <FieldMessage.Error.Root>
+            <div className="flex items-center gap-2">
+              <Controller
+                name="orgao_tribunal"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}                 
+                    disabled={values.desdobramento}
+                  >
+                    <SelectTrigger ref={field.ref} className={errors.orgao_tribunal ? 'border-red-500' : ''}>
+                      <SelectValue placeholder="Selecione um Órgão / Tribunal" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {options.tribunais.map((tribunal) => (
+                        <SelectItem key={tribunal} value={tribunal}>
+                          {tribunal}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+
+              <X
+                onClick={() => {
+                  if (values.desdobramento) {
+                    return;
+                  }
+                  
+                  setValue('orgao_tribunal', '');
+                }}
+                className="w-4 h-4 cursor-pointer text-gray-400 hover:text-red-500"
+              />
+            </div>
+            <FieldMessage.Error.Text>
+              {errors.orgao_tribunal?.message}
+            </FieldMessage.Error.Text>
+          </FieldMessage.Error.Root>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="data_distribuicao">Data de Distribuição</Label>
+          <FieldMessage.Error.Root>
+            <Controller
+              name="data_distribuicao"
+              control={control}
+              render={({ field }) => (
+                <div className="group flex gap-2 items-center">
+                  <DatePicker
+                    date={field.value ? new Date(field.value) : undefined}
+                    disabled={values.desdobramento}
+                    onSelect={(selectedDate) => {
+                      handleDataDistribuicaoChange(selectedDate, field);
+                    }}
+                  />
+                  <X
+                    onClick={() => {
+                      if (values.desdobramento) {
+                        return;
+                      }
+    
+                      handleDataDistribuicaoChange(null, field);
+                    }}
+                    className="w-4 h-4 cursor-pointer text-gray-400 hover:text-red-500"
+                  />
+                </div>
+              )}
+            />
+            <FieldMessage.Error.Text>
+              {errors.data_distribuicao?.message}
+            </FieldMessage.Error.Text>
+          </FieldMessage.Error.Root>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="data_citacao">Data de citação</Label>
+          <FieldMessage.Error.Root>
+            
+              <Controller
+                name="data_citacao"
+                control={control}
+                render={({ field }) => (
+                  <div className="group flex gap-2 items-center">
+                  <DatePicker
+                    date={field.value ? new Date(field.value) : undefined}
+                    onSelect={(selectedDate) => {
+                      handleDataCitacaoChange(selectedDate, field);
+                    }}
+                    disabled={values.desdobramento}
+                  />
+                    <X
+                      onClick={() => {
+                        if (values.desdobramento) {
+                          return;
+                        }
+
+                        handleDataCitacaoChange(null, field);
+                      }}
+                      className="w-4 h-4 cursor-pointer text-gray-400 hover:text-red-500"
+                    />
+                  </div>
+                )}
+              />
+
+            <FieldMessage.Error.Text>
+              {errors.data_citacao?.message}
+            </FieldMessage.Error.Text>
+          </FieldMessage.Error.Root>
+
+        </div>
+
+        <div>
+          <Label className="block text-sm mb-1">Resumo do processo</Label>
+          <FieldMessage.Error.Root>
+            <Textarea
+              {...register('resumo_processo')}
+              id="resumo_processo"
+              rows={4}
+              className={`bg-white dark:bg-black ${errors.resumo_processo ? 'border-red-500' : ''}`}
+              disabled={values.desdobramento}
+            />
+            <FieldMessage.Error.Text>
+              {errors.resumo_processo?.message}
+            </FieldMessage.Error.Text>
+          </FieldMessage.Error.Root>
+        </div>
+
+        <div>
+          <Label className="block text-sm mb-1">Valor de causa</Label>
+          <FieldMessage.Error.Root>
+            <Controller
+              name="valor_causa"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  type="text"
+                  value={field.value}
+                  placeholder="R$ 0,00"
+                  disabled={values.desdobramento}
+                  className={`w-full p-2 border rounded-md text-sm ${
+                    errors.valor_causa ? 'border-red-500' : ''
+                  }`}
+                  onChange={(event) => {
+                    const value = event.target.value;
+                    const formattedValue = maskCurrencyBRL(value);
+                    field.onChange(formattedValue);
+                  }}
+                />
+              )}
+            />
+            <FieldMessage.Error.Text>
+              {errors.valor_causa?.message}
+            </FieldMessage.Error.Text>
+          </FieldMessage.Error.Root>
+        </div>
+
+        <div>
+          <Label className="block text-sm mb-1">Prazo para cumprimento da liminar</Label>
+          <div className="flex items-center gap-3">
+            <Input
+              type="text"
+              placeholder="Prazo"
+              className="w-24 p-2 border rounded-md text-sm"
+              {...register('prazo_liminar')}
+              onChange={handlePrazoLiminarChange}
+              disabled={values.desdobramento}
+            />
+            <div className="flex items-center gap-2">
+              <span
+                className={`text-xs ${
+                  values.prazo_tipo === 'dias_corridos' ? 'text-gray-500' : 'text-blue-600 font-medium'
+                }`}>
+                horas corridas
+              </span>
+              <div
+                className={`relative inline-block w-10 h-5 rounded-full transition-colors duration-200 ease-in-out ${
+                  values.prazo_tipo === 'dias_corridos' ? 'bg-blue-500' : 'bg-gray-300'
+                }`}
+                onClick={handlePrazoTipoChange}>
+                <span
+                  className={`absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-200 ease-in-out ${
+                    values.prazo_tipo === 'dias_corridos' ? 'transform translate-x-5' : ''
+                  }`}
+                />
+                <Input
+                  type="checkbox"
+                  className="sr-only"
+                  checked={values.prazo_tipo === 'dias_corridos'}
+                  onChange={handlePrazoTipoChange}
+                />
+              </div>
+              <span
+                className={`text-xs ${
+                  values.prazo_tipo === 'dias_corridos' ? 'text-blue-600 font-medium' : 'text-gray-500'
+                }`}>
+                dias corridos
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <Label className="block text-sm mb-1">Conteúdo da liminar</Label>
+          <Textarea
+            id="conteudo_liminar"
+            {...register('conteudo_liminar')}
+            rows={3}
+            disabled={values.desdobramento}
+            placeholder="Transcrição da liminar deferida"
+            className="bg-white dark:bg-black"
+          />
+        </div>
+
+        <div>
+          <Label className="block text-sm mb-1">
+            Prazo para apresentar contestação (dias corridos)
+          </Label>
+          <Controller
+            name="prazo_contestacao"
+            control={control}
+            render={({ field }) => (
+              <Input
+                type="text"
+                placeholder="Prazo em dias"
+                className="w-full p-2 border rounded-md text-sm"
+                disabled={values.desdobramento}
+                value={field.value}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, ''); // Remove qualquer caractere não numérico
+
+                  if (value === '' || parseInt(value) > 0) {
+                    field.onChange(value);
+                  }
+                }}
+              />
+            )}
+          />
+        </div>
+
+        <FieldMessage.Error.Root>
+          <div className="space-y-2">
+            <Label htmlFor="data_audiencia">Data da audiência</Label>
+            
+              <Controller
+                name="data_audiencia"
+                control={control}
+                render={({ field }) => (
+                  <div className="group flex gap-2 items-center">
+                    <DateTimePicker
+                      date={field.value ? new Date(field.value) : undefined}
+                      onSelect={(selectedDate) => {
+                        handleDataAudienciaChange(selectedDate, field);
+                      }}
+                      disabled={values.desdobramento}
+                    />
+                    <X
+                      onClick={() => {
+                        if (values.desdobramento) {
+                          return;
+                        }
+
+                        handleDataAudienciaChange(null, field);
+                      }}
+                      className="w-4 h-4 cursor-pointer text-gray-400 hover:text-red-500"
+                    />
+                  </div>
+                )}
+              />
+          </div>
+          <FieldMessage.Error.Text>
+            {errors.data_audiencia?.message}
+          </FieldMessage.Error.Text>
+        </FieldMessage.Error.Root>
+      </div>
+    </div>
+  );
+}
+
+export const DetalhesAcao = React.memo(DetalhesAcaoComponent, (prevProps, nextProps) => {
+  // console.log('prevProps', prevProps);
+  // console.log('nextProps', nextProps);
+
+  // console.log('prevProps.dadosConsultaProcesso', prevProps.dadosConsultaProcesso);
+  // console.log('nextProps.dadosConsultaProcesso', nextProps.dadosConsultaProcesso);
+  // console.log('isEqual(prevProps.dadosConsultaProcesso, nextProps.dadosConsultaProcesso)', isEqual(prevProps.dadosConsultaProcesso, nextProps.dadosConsultaProcesso));
+
+  if (!isEqual(prevProps.dadosConsultaProcesso, nextProps.dadosConsultaProcesso)) {
+    return false;
+  }
+
+  return true;
+});

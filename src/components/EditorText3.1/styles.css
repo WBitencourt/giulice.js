@@ -1,0 +1,375 @@
+/* Estilos para o EditorText2.1 */
+
+.editor-container {
+  border-radius: 0.5rem;
+  position: relative;
+  line-height: 1.5;
+  font-weight: 400;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+}
+
+.editor-container.dark {
+  background-color: #1e293b;
+  border-color: #334155;
+}
+
+.editor-inner {
+  position: relative;
+  border-radius: 0.5rem;
+}
+
+.editor-input {
+  min-height: 150px;
+  max-height: 400px;
+  resize: none;
+  font-size: 16px;
+  position: relative;
+  tab-size: 1;
+  outline: 0;
+  padding: 1rem;
+  caret-color: #444;
+  overflow-y: auto;
+}
+
+.editor-container.dark .editor-input {
+  caret-color: #fff;
+  color: #f8fafc;
+}
+
+.editor-text-bold {
+  font-weight: bold;
+}
+
+.editor-text-italic {
+  font-style: italic;
+}
+
+.editor-text-underline {
+  text-decoration: underline;
+}
+
+.editor-text-strikethrough {
+  text-decoration: line-through;
+}
+
+.editor-paragraph {
+  margin: 0 0 0.5em 0;
+  position: relative;
+}
+
+.editor-placeholder {
+  color: #64748b;
+  overflow: hidden;
+  position: absolute;
+  text-overflow: ellipsis;
+  top: 1rem;
+  left: 1rem;
+  user-select: none;
+  pointer-events: none;
+  font-size: 16px;
+}
+
+.editor-container.dark .editor-placeholder {
+  color: #94a3b8;
+}
+
+/* Estilos para a barra de ferramentas */
+.toolbar {
+  display: flex;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  overflow-x: auto;
+}
+
+.editor-container.dark .toolbar {
+  border-color: #334155;
+}
+
+.toolbar button {
+  background-color: transparent;
+  border: 0;
+  border-radius: 0.25rem;
+  color: #64748b;
+  cursor: pointer;
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.25rem;
+}
+
+.toolbar button:hover {
+  background-color: #f1f5f9;
+}
+
+.editor-container.dark .toolbar button:hover {
+  background-color: #334155;
+}
+
+.toolbar button.active {
+  background-color: #e2e8f0;
+  color: #0f172a;
+}
+
+.editor-container.dark .toolbar button.active {
+  background-color: #334155;
+  color: #e2e8f0;
+}
+
+.divider {
+  width: 1px;
+  background-color: #e2e8f0;
+  margin: 0 0.5rem;
+}
+
+.editor-container.dark .divider {
+  background-color: #334155;
+}
+
+/* Estilos básicos para o editor Lexical */
+
+/* Classes de alinhamento de texto com maior especificidade */
+.text-left,
+[data-format="left"],
+[dir="ltr"],
+p.text-left,
+p[data-format="left"],
+p[dir="ltr"] {
+  text-align: left !important;
+}
+
+.text-center,
+[data-format="center"],
+p.text-center,
+p[data-format="center"] {
+  text-align: center !important;
+}
+
+.text-right,
+[data-format="right"],
+[dir="rtl"],
+p.text-right,
+p[data-format="right"],
+p[dir="rtl"] {
+  text-align: right !important;
+}
+
+.text-justify,
+[data-format="justify"],
+p.text-justify,
+p[data-format="justify"] {
+  text-align: justify !important;
+}
+
+/* Classes específicas para alinhamento de parágrafo */
+.paragraphLeft,
+p[data-format="left"] {
+  text-align: left !important;
+}
+
+.paragraphCenter,
+p[data-format="center"] {
+  text-align: center !important;
+}
+
+.paragraphRight,
+p[data-format="right"] {
+  text-align: right !important;
+}
+
+.paragraphJustify,
+p[data-format="justify"] {
+  text-align: justify !important;
+}
+
+/* Garantir que elementos inline dentro de parágrafos alinhados herdem o alinhamento */
+[data-format="left"] *,
+p[dir="ltr"] *,
+.text-left * {
+  text-align: inherit;
+}
+
+[data-format="center"] *,
+.text-center * {
+  text-align: inherit;
+}
+
+[data-format="right"] *,
+p[dir="rtl"] *,
+.text-right * {
+  text-align: inherit;
+}
+
+[data-format="justify"] *,
+.text-justify * {
+  text-align: inherit;
+}
+
+/* Estilo específico para o ContentEditable */
+[contenteditable="true"] p {
+  margin: 0.5em 0;
+}
+
+/* Garantir que o ContentEditable não sobrescreva alinhamentos */
+[contenteditable="true"] p[dir="ltr"],
+[contenteditable="true"] p[data-format="left"],
+[contenteditable="true"] .text-left {
+  text-align: left !important;
+}
+
+[contenteditable="true"] p[dir="rtl"],
+[contenteditable="true"] p[data-format="right"],
+[contenteditable="true"] .text-right {
+  text-align: right !important;
+}
+
+[contenteditable="true"] .text-center,
+[contenteditable="true"] p[data-format="center"] {
+  text-align: center !important;
+}
+
+[contenteditable="true"] .text-justify,
+[contenteditable="true"] p[data-format="justify"] {
+  text-align: justify !important;
+}
+
+/* Garantir que elementos filhos dentro do ContentEditable mantenham alinhamento */
+[contenteditable="true"] p[dir="ltr"] *,
+[contenteditable="true"] p[data-format="left"] *,
+[contenteditable="true"] .text-left * {
+  text-align: inherit;
+}
+
+[contenteditable="true"] p[dir="rtl"] *,
+[contenteditable="true"] p[data-format="right"] *,
+[contenteditable="true"] .text-right * {
+  text-align: inherit;
+}
+
+[contenteditable="true"] .text-center *,
+[contenteditable="true"] p[data-format="center"] * {
+  text-align: inherit;
+}
+
+[contenteditable="true"] .text-justify *,
+[contenteditable="true"] p[data-format="justify"] * {
+  text-align: inherit;
+}
+
+/* Elementos com texto formatado */
+.editor-text-bold {
+  font-weight: bold;
+}
+
+.editor-text-italic {
+  font-style: italic;
+}
+
+.editor-text-underline {
+  text-decoration: underline;
+}
+
+.editor-text-strikethrough {
+  text-decoration: line-through;
+}
+
+.editor-text-underlineStrikethrough {
+  text-decoration: underline line-through;
+}
+
+/* Estilos para tabelas */
+.lexical-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+  border: 1px solid #e2e8f0;
+}
+
+.lexical-table-cell {
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem;
+  min-width: 100px;
+  position: relative;
+  vertical-align: top;
+}
+
+.lexical-table-cell-header {
+  background-color: #f7fafc;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Estilos para listas */
+.editor-list-ol {
+  padding-left: 1.5rem;
+  list-style-type: decimal;
+}
+
+.editor-list-ul {
+  padding-left: 1.5rem;
+  list-style-type: disc;
+}
+
+.editor-listitem {
+  margin-bottom: 0.25rem;
+}
+
+.editor-nested-listitem {
+  padding-left: 1rem;
+}
+
+/* Estilos para citações */
+.editor-quote {
+  padding-left: 1rem;
+  border-left: 4px solid #e2e8f0;
+  color: #718096;
+}
+
+/* Estilos para cabeçalhos */
+.editor-heading-h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+}
+
+.editor-heading-h2 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.editor-heading-h3 {
+  font-size: 1.125rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* Sintaxe highlighting para código */
+.editor-token-comment {
+  color: slategray;
+}
+
+.editor-token-string,
+.editor-token-selector {
+  color: #067d17;
+}
+
+.editor-token-keyword,
+.editor-token-property {
+  color: #994cc3;
+}
+
+.editor-token-function {
+  color: #d32f2f;
+}
+
+.editor-token-attr {
+  color: #0550ae;
+}
+
+.editor-token-punctuation {
+  color: #999;
+}
