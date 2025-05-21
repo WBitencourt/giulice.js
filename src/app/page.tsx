@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { version } from "../../package.json";
+import packageJson from "../../package.json";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export default function Home() {
       </main>
       <footer className="row-start-3 flex flex-wrap items-center justify-center">
         <p className="text-center text-xs sm:text-sm/6">
-          Copyright © {new Date().getFullYear()}. Todos os direitos reservados. v{version}
+          Copyright © {new Date().getFullYear()}. Todos os direitos reservados. v{packageJson.version}
         </p>
       </footer>
     </div>

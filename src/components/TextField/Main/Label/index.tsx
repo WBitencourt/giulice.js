@@ -16,6 +16,7 @@ export const Label = ({ className, children, ...props }: ComponentProps<'label'>
 
   return (
     <label
+      { ...props }
       data-input-focused={isFocused || hasValue}
       data-highlight={highlight}
       data-disabled={isDisabled}

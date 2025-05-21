@@ -1,6 +1,6 @@
 'use client'
 
-import { Tooltip } from '@/components/Tooltip2.0';
+import { Tooltip } from '@/components/Tooltip';
 import * as Icon from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
 import { Value } from "../../../contexts";

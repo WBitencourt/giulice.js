@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Tooltip } from "../Tooltip2.0";
+import { Tooltip } from "../Tooltip";
 import { CircleCheck, Copy } from "lucide-react";
 import { copyToClipBoard } from "@/utils/dom";
 

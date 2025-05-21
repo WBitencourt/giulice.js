@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
  
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/classname";
 import React from "react";
 import {
   Period,

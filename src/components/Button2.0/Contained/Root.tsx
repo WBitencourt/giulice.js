@@ -15,7 +15,6 @@ export function ContainedRoot({
   className,
   visible = true,
   disabled = false,
-  type = 'button',
   ...props
 }: ContainedRootDefaultProps) {
   
@@ -31,12 +30,10 @@ export function ContainedRoot({
     return null;
   }
 
-  <button onClick={(event) => {}}></button>
-
   return (
     <Button 
       { ...props }
-      variant="default" 
+      
       disabled={disabled}
       className={twMerge(
         'bg-opacity-80 dark:bg-opacity-95',

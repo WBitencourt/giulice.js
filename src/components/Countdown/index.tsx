@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import moment from 'moment';
 import * as Icon from '@phosphor-icons/react';
-import { Tooltip } from '@/components/Tooltip2.0';
-import { object } from "@/utils/Object";
+import { Tooltip } from '@/components/Tooltip';
+import { object } from "@/utils/object";
 
 interface CountdownProps {
   label?: string;

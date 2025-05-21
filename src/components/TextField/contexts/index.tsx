@@ -1,4 +1,6 @@
-import { createContext, useCallback, useContext as useContextPrimitive, useEffect, useState } from 'react';
+'use client';
+
+import { createContext, useCallback, useContext as useContextPrimitive, useState } from 'react';
 
 export type Value = string | number | readonly string[] | undefined;
 
@@ -24,7 +26,7 @@ export interface ContextProps {
 
 const Context = createContext<ContextProps>({} as ContextProps);
 
-export const Provider = ({ highlight = false, onBlur, children, ...props }: ProviderRootProps) => {
+export const Provider = ({ highlight = false, children, ...props }: ProviderRootProps) => {
   const [inputID, setInputID] = useState<string>(`input-${Math.random().toString()}`);
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -48,7 +50,7 @@ export const Provider = ({ highlight = false, onBlur, children, ...props }: Prov
     }
 
     setInputID(newValue);
-  }, []);
+  }, [inputID]);
 
   const updateHasValue = useCallback((newValue: boolean) => {
     setHasValue(newValue);

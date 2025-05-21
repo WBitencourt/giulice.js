@@ -1,4 +1,4 @@
-import { Tooltip } from "@/components/Tooltip2.0";
+import { Tooltip } from "@/components/Tooltip";
 import * as IconPrimitive from "phosphor-react";
 import { HtmlHTMLAttributes } from "react";
 import { useThemeStore } from "@/zustand-store/theme.store";

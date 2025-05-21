@@ -1,8 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { AccordionRootProps } from "./Root";
 import Accordion from "./index";
-import { Root as RootItem } from "./Item/Root.stories";
-import { AccordionItemRootProps } from "./Item/Root";
 import * as Icon from '@phosphor-icons/react';
 import { useState } from "react";
 

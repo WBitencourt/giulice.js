@@ -30,8 +30,6 @@ export function OutlinedRoot({
     return null;
   }
 
-  <button onClick={(event) => {}}></button>
-
   return (
     <Button 
       { ...props }

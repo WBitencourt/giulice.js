@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Link from 'next/link'
-import { Tooltip, TooltipDirection } from '../Tooltip2.0';
+import { Tooltip, TooltipDirection } from '../Tooltip';
 import { twMerge } from 'tailwind-merge';
 
 export interface BreadcrumbsRootProps extends React.HtmlHTMLAttributes<HTMLDivElement> {

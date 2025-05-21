@@ -1,4 +1,4 @@
-import { Tooltip } from "@/components/Tooltip2.0";
+import { Tooltip } from "@/components/Tooltip";
 import { MinusCircle, PlusCircle } from "phosphor-react";
 import { HtmlHTMLAttributes } from "react";
 import { useFontSizeStore } from "@/zustand-store/font-size.store";
