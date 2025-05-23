@@ -10,7 +10,11 @@ export interface TextFieldRootProps extends ComponentProps<'div'> {
 }
 
 const Root = ({ visible = true, className, children, ...props }: TextFieldRootProps) => {
-  const { isFocused, isDisabled } = useContext();
+  const { inputID, isFocused, isDisabled, inputRef } = useContext();
+
+  const handleDivClick = () => {
+    inputRef.current?.focus();
+  };
   
   if(!visible) {
     return null;
@@ -19,13 +23,15 @@ const Root = ({ visible = true, className, children, ...props }: TextFieldRootPr
   return (
     <div 
       { ...props }
+      aria-label={inputID}
       data-input-focused={isFocused}
       data-disabled={isDisabled}
+      onClick={handleDivClick}
       className={twMerge([
         'group relative flex px-3 rounded-md border-1 h-14 justify-center items-center',
         'bg-white dark:bg-zinc-950 text-black dark:text-white bg-opacity-50',
-        'hover:bg-accent hover:text-accent-foreground hover:dark:bg-accent hover:dark:text-accent-foreground',
-        //'data-[input-focused=true]:outline-none data-[input-focused=true]:ring-2 data-[input-focused=true]:ring-cyan-500',
+        'hover:border-black hover:dark:border-white',
+        'data-[input-focused=true]:outline-1 data-[input-focused=true]:outline-black data-[input-focused=true]:dark:outline-white',
         //'data-[input-focused=true]:border-0 data-[input-focused=true]:hover:border-transparent',
         'data-[disabled=true]:bg-opacity-50 data-[disabled=true]:dark:bg-opacity-50',
       ].join(' '), className)}

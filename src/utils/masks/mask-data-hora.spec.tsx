@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { maskDataHora } from '.';
+import { maskDateTime } from '.';
 
 const cases = [
   ['01', '01'],
@@ -30,20 +30,20 @@ const invalidCases = [
   [[] as unknown as string, ''],
 ];
 
-describe('Mask: maskDataHora', () => {
+describe('Mask: maskDateTime', () => {
   it('should be a function', () => {
-    expect(typeof maskDataHora).toBe('function');
+    expect(typeof maskDateTime).toBe('function');
   });
 
   it('should return a string', () => {
-    expect(typeof maskDataHora('11999999999')).toBe('string');
+    expect(typeof maskDateTime('11999999999')).toBe('string');
   });
 
   it.each(cases)('should format string input "%s" to "%s"', (input, expected) => {
-    expect(maskDataHora(input)).toBe(expected);
+    expect(maskDateTime(input)).toBe(expected);
   });
   
   it.each(invalidCases)('should format invalid input "%s" to "%s"', (input, expected) => {
-    expect(maskDataHora(input)).toBe(expected);
+    expect(maskDateTime(input)).toBe(expected);
   });
 });

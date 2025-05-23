@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useCallback, useContext as useContextPrimitive, useState } from 'react';
+import { createContext, useCallback, useContext as useContextPrimitive, useRef, useState } from 'react';
 
 export type Value = string | number | readonly string[] | undefined;
 
@@ -11,6 +11,7 @@ export interface ProviderRootProps {
 }
 
 export interface ContextProps {
+  inputRef: React.RefObject<HTMLInputElement | null>;
   inputID: string;
   isFocused: boolean;
   highlight: boolean | undefined;
@@ -22,11 +23,14 @@ export interface ContextProps {
   updateInputID: (newValue: string | undefined) => void;
   updateIsDisabled: (newValue: boolean) => void;
   toggleShowPassword: () => void;
+  toggleFocus: () => void;
 }
 
 const Context = createContext<ContextProps>({} as ContextProps);
 
 export const Provider = ({ highlight = false, children, ...props }: ProviderRootProps) => {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   const [inputID, setInputID] = useState<string>(`input-${Math.random().toString()}`);
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -39,6 +43,10 @@ export const Provider = ({ highlight = false, children, ...props }: ProviderRoot
 
   const updateIsFocused = useCallback((newValue: boolean) => {
     setIsFocused(newValue);
+  }, []);
+
+  const toggleFocus = useCallback(() => {
+    setIsFocused(state => !state);
   }, []);
 
   const updateInputID = useCallback((newValue: string | undefined) => {
@@ -62,6 +70,7 @@ export const Provider = ({ highlight = false, children, ...props }: ProviderRoot
 
   return (
     <Context.Provider { ...props } value={{
+      inputRef,
       inputID,
       isFocused,
       isDisabled,
@@ -73,6 +82,7 @@ export const Provider = ({ highlight = false, children, ...props }: ProviderRoot
       updateHasValue,
       updateIsDisabled,
       toggleShowPassword,
+      toggleFocus,
     }}>
       {children}
     </Context.Provider>

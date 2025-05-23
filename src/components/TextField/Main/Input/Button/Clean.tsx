@@ -1,5 +1,7 @@
+'use client';
+
 import useContext from '@/components/TextField/contexts';
-import * as Icon from '@phosphor-icons/react';
+import { XIcon } from '@phosphor-icons/react';
 import { ComponentProps } from 'react';
 import { twMerge } from 'tailwind-merge';
 
@@ -10,12 +12,12 @@ export const ButtonClean = ({ className, type = 'button', ...props }: ComponentP
 
   return (
     <button 
-      type={type} 
       { ...props } 
+      type={type} 
       className={twMerge('cursor-pointer z-10', className)}
     >
-      <Icon.X 
-        className='group-hover:text-cyan-500 text-black/0 text-sm' 
+      <XIcon
+        className='group-hover:text-red-500 text-black/0 text-sm' 
         weight='bold' 
       />  
     </button>

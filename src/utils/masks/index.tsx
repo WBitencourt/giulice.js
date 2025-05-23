@@ -51,6 +51,44 @@ export const maskNumeroProcesso = (value: string | undefined) => {
     });
 };
 
+export const maskCpf = (value: string | undefined) => {
+  if (!value) return '';
+
+  if (typeof value !== 'string') {
+    return ''
+  }
+
+  const cleanValue = value?.replace(/\D/g, '').slice(0, 14); // Remove caracteres não numéricos e limita a 14 dígitos
+
+  if (!cleanValue) return '';
+
+  return cleanValue
+  .replace(/(\d{3})(\d{0,3})(\d{0,3})(\d{0,2})/, (match, p1, p2, p3, p4) => {
+    return [p1, p2 && `.${p2}`, p3 && `.${p3}`, p4 && `-${p4}`]
+      .filter(Boolean)
+      .join('');
+  });
+}
+
+export const maskCnpj = (value: string | undefined) => {
+  if (!value) return '';
+
+  if (typeof value !== 'string') {
+    return ''
+  }
+
+  const cleanValue = value?.replace(/\D/g, '').slice(0, 14); // Remove caracteres não numéricos e limita a 14 dígitos
+
+  if (!cleanValue) return '';
+
+  return cleanValue
+    .replace(/(\d{2})(\d{0,3})(\d{0,3})(\d{0,4})(\d{0,2})/, (match, p1, p2, p3, p4, p5) => {
+      return [p1, p2 && `.${p2}`, p3 && `.${p3}`, p4 && `/${p4}`, p5 && `-${p5}`]
+        .filter(Boolean)
+        .join('');
+    });
+}
+
 export const maskCpfCnpj = (value: string | undefined) => {
   if (!value) return '';
 
@@ -63,21 +101,9 @@ export const maskCpfCnpj = (value: string | undefined) => {
   if (!cleanValue) return '';
 
   if (cleanValue.length <= 11) {
-    // Máscara para CPF
-    return cleanValue
-      .replace(/(\d{3})(\d{0,3})(\d{0,3})(\d{0,2})/, (match, p1, p2, p3, p4) => {
-        return [p1, p2 && `.${p2}`, p3 && `.${p3}`, p4 && `-${p4}`]
-          .filter(Boolean)
-          .join('');
-      });
+    return maskCpf(cleanValue);
   } else {
-    // Máscara para CNPJ
-    return cleanValue
-      .replace(/(\d{2})(\d{0,3})(\d{0,3})(\d{0,4})(\d{0,2})/, (match, p1, p2, p3, p4, p5) => {
-        return [p1, p2 && `.${p2}`, p3 && `.${p3}`, p4 && `/${p4}`, p5 && `-${p5}`]
-          .filter(Boolean)
-          .join('');
-      });
+    return maskCnpj(cleanValue);
   }
 };
 
@@ -221,7 +247,7 @@ export const maskUuid = (value: string | undefined): string => {
   return formatted;
 };
 
-export const maskDataHora = (value: string | undefined): string => {
+export const maskDateTime = (value: string | undefined): string => {
   if (!value) return '';
 
   if (typeof value !== 'string') {

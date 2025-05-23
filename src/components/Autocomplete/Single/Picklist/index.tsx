@@ -120,6 +120,8 @@ export const PickListLi = ({ index, item, onClick }: PickListItemProps) => {
 
   return (
     <li
+      role="option"
+      aria-selected={index === activeItemIndex}
       data-selected={index === activeItemIndex}
       className='cursor-pointer text-sm rounded-md p-2 data-[selected=true]:bg-zinc-200 dark:data-[selected=true]:bg-zinc-900'
       onClick={handleClick}
