@@ -25,13 +25,13 @@ const toggleTheme = (get: Get, set: Set) => () => {
   set({ theme });
   updateDOMTheme(theme)
 
-  destroyCookie(undefined, 'everest.current_theme', { domain: `.${window.location.hostname}`, path: '/' });
-  setCookie(null, 'everest.current_theme', theme, { domain: `.${window.location.hostname}`, path: '/' });
+  destroyCookie(undefined, 'wed.current_theme', { domain: `.${window.location.hostname}`, path: '/' });
+  setCookie(null, 'wed.current_theme', theme, { domain: `.${window.location.hostname}`, path: '/' });
 }
 
 const startThemeStore = (get: Get, set: Set) => () => {
   try {
-    const {'everest.current_theme': cookieTheme } = parseCookies();
+    const {'wed.current_theme': cookieTheme } = parseCookies();
 
     if(cookieTheme === 'light' || cookieTheme === 'dark') {
       set({ theme: cookieTheme });  
@@ -44,14 +44,14 @@ const startThemeStore = (get: Get, set: Set) => () => {
     set({ theme });  
     updateDOMTheme(theme)
 
-    destroyCookie(undefined, 'everest.current_theme', { domain: `.${window.location.hostname}`, path: '/' });
-    setCookie(null, 'everest.current_theme', theme, { domain: `.${window.location.hostname}`, path: '/' });
+    destroyCookie(undefined, 'wed.current_theme', { domain: `.${window.location.hostname}`, path: '/' });
+    setCookie(null, 'wed.current_theme', theme, { domain: `.${window.location.hostname}`, path: '/' });
   } catch {
     set({ theme: 'light' });  
     updateDOMTheme('light')
 
-    destroyCookie(undefined, 'everest.current_theme', { domain: `.${window.location.hostname}`, path: '/' });
-    setCookie(null, 'everest.current_theme', 'light', { domain: `.${window.location.hostname}`, path: '/' });
+    destroyCookie(undefined, 'wed.current_theme', { domain: `.${window.location.hostname}`, path: '/' });
+    setCookie(null, 'wed.current_theme', 'light', { domain: `.${window.location.hostname}`, path: '/' });
   }
 }
 

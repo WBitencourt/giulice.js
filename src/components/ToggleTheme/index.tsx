@@ -1,7 +1,10 @@
+"use client";
+
 import { Tooltip } from "@/components/Tooltip";
-import * as IconPrimitive from "phosphor-react";
-import { HtmlHTMLAttributes } from "react";
+import { Sun, Moon }  from "lucide-react";
+import { HtmlHTMLAttributes, useEffect } from "react";
 import { useThemeStore } from "@/zustand-store/theme.store";
+import { useShallow } from "zustand/react/shallow";
 
 interface ToggleThemeRootProps extends HtmlHTMLAttributes<HTMLDivElement> {
   children: React.ReactNode | React.ReactNode[],
@@ -13,14 +16,37 @@ interface ToggleThemeTextProps extends HtmlHTMLAttributes<HTMLSpanElement> {
   overRideCSSClass?: boolean,
 }
 
+function ToggleThemeStartRoot({ children, ...props }: ToggleThemeRootProps) { 
+  const { startThemeStore } = useThemeStore(
+    useShallow((state) => ({
+      startThemeStore: state.startThemeStore,
+    }))
+  );
+
+  useEffect(() => {
+    startThemeStore();
+  }, [startThemeStore]);
+
+  return (
+    <ToggleThemeRoot {...props}>
+      {children}
+    </ToggleThemeRoot>
+  )
+}
+
 function ToggleThemeRoot({ children, className, overRideCSSClass, ...props }: ToggleThemeRootProps) { 
-  const toggleTheme = useThemeStore((state) => state.toggleTheme);
+  const { toggleTheme } = useThemeStore(
+    useShallow((state) => ({
+      toggleTheme: state.toggleTheme,
+    }))
+  );
 
   return (
     <div 
       {...props}
       className={overRideCSSClass ? className : `flex flex-1 ${className}`} 
-      onClick={toggleTheme}>
+      onClick={toggleTheme}
+    >
       {children}
     </div>
   )
@@ -35,14 +61,12 @@ function ToggleThemeIcon() {
         <Tooltip.Trigger>
           {
             theme === 'light' ?
-            <IconPrimitive.Sun 
+            <Sun 
               className="text-yellow-500 text-3xl" 
-              weight="fill" 
             /> 
             :
-            <IconPrimitive.MoonStars 
-              className="text-blue-700 text-3xl" 
-              weight="fill" 
+            <Moon 
+              className="text-blue-700 text-3xl"  
             /> 
           }
         </Tooltip.Trigger>
@@ -65,7 +89,7 @@ function ToggleThemeText({ text, className, overRideCSSClass, ...props }: Toggle
 }
 
 export const ToggleTheme = {
-  Root: ToggleThemeRoot,
+  Root: ToggleThemeStartRoot,
   Icon: ToggleThemeIcon,
   Text: ToggleThemeText,
 }

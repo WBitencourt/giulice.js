@@ -4,20 +4,105 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "TextField",
-  description: "Página de TextField",
+  description: "Página de demonstração do componente TextField",
 };
 
-export default function Home() {
+export default function TextFieldPage() {
   return (
-    <div className="flex flex-col items-center h-full w-full">
-      <h2 className="text-2xl font-bold">TextField</h2>
-      <div className="flex flex-col justify-center h-full w-full px-40 rounded-lg">
-        <TextFieldComponent />
-      </div>
-      <div className="flex gap-2 justify-center items-center rounded-lg">
-        <div>⬅️</div>
-        <Link className="text-blue-500 underline" href="/">Back to home</Link>
-        <div>🏠</div>
+    <div className="min-h-screen w-full">
+      <div className="w-full mx-auto py-12 px-4 sm:w-7xl sm:px-6 lg:px-8 bg-gradient-to-b border-l border-r border-b border-t-none border-dashed border-zinc-200 dark:border-zinc-800">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
+            Componente TextField
+          </h2>
+          <p className="mt-3 text-xl text-gray-500">
+            Demonstração interativa do componente de entrada de texto
+          </p>
+        </div>
+
+        {/* Cartão principal de demonstração */}
+        <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-10">
+          <div className="bg-blue-600 px-6 py-4">
+            <h2 className="text-lg font-medium text-white">Demonstração Básica</h2>
+          </div>
+          <div className="p-6 bg-white border-b border-gray-200">
+            <TextFieldComponent />
+          </div>
+          <div className="bg-gray-50 px-6 py-4">
+            <p className="text-sm text-gray-600">
+              Este é o componente TextField básico com funcionalidade de limpeza de campo.
+              Digite algo para testar a interatividade.
+            </p>
+          </div>
+        </div>
+
+        {/* Seção de recursos */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+          <div className="bg-white shadow rounded-lg p-6">
+            <h3 className="text-lg font-medium text-gray-900 mb-2">Características</h3>
+            <ul className="space-y-2 text-gray-600">
+              <li className="flex items-start">
+                <span className="flex-shrink-0 h-5 w-5 text-blue-500">✓</span>
+                <span className="ml-2">Input customizável</span>
+              </li>
+              <li className="flex items-start">
+                <span className="flex-shrink-0 h-5 w-5 text-blue-500">✓</span>
+                <span className="ml-2">Suporte para labels</span>
+              </li>
+              <li className="flex items-start">
+                <span className="flex-shrink-0 h-5 w-5 text-blue-500">✓</span>
+                <span className="ml-2">Botão de limpar campo</span>
+              </li>
+              <li className="flex items-start">
+                <span className="flex-shrink-0 h-5 w-5 text-blue-500">✓</span>
+                <span className="ml-2">Componente completamente acessível</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div className="bg-white shadow rounded-lg p-6">
+            <h3 className="text-lg font-medium text-gray-900 mb-2">Como usar</h3>
+            <div className="bg-gray-800 rounded p-4 text-sm text-gray-300 overflow-x-auto">
+<pre>
+{
+  `
+// Exemplo básico
+<TextField.Root>
+  <TextField.Main.Root>
+    <TextField.Main.Label>
+      Nome Completo
+    </TextField.Main.Label>
+    <TextField.Main.Input.Root>
+      <TextField.Main.Input.Field
+        placeholder="Digite seu nome"
+        value={value}
+        onChange={onChange}
+      />
+    </TextField.Main.Input.Root>
+  </TextField.Main.Root>
+  <TextField.Button.Root>
+    <TextField.Button.Clean onClick={handleClear} />
+  </TextField.Button.Root>
+</TextField.Root>
+
+// Com botão de copiar
+<TextField.Button.Clipboard value={value} />
+
+// Com campo de senha
+<TextField.Button.Password onClick={togglePassword} />
+  `
+}
+</pre>
+            </div>
+          </div>
+        </div>
+
+        {/* Rodapé com navegação */}
+        <div className="flex justify-center items-center space-x-4 p-4 bg-white shadow rounded-lg">
+          <Link className="px-4 py-2 text-blue-500 rounded-lg  transition-colors" href="/">
+            Voltar ao início
+          </Link>
+        </div>
       </div>
     </div>
   );

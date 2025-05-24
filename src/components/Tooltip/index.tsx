@@ -1,8 +1,10 @@
+'use client';
+
 import {
   Tooltip as TooltipPrimitive,
-  TooltipContent,
+  TooltipContent as TooltipContentPrimitive,
   TooltipProvider,
-  TooltipTrigger,
+  TooltipTrigger as TooltipTriggerPrimitive,
 } from "@/components/ui/tooltip"
 
 export interface TooltipProps {
@@ -32,9 +34,9 @@ const TooltipRoot = ({ children }: TooltipProps) => (
 );
 
 const TooltipTriggerComponent = ({ asChild = true, children }: TooltipTriggerComponentProps) => (
-  <TooltipTrigger asChild={asChild}>
+  <TooltipTriggerPrimitive asChild={asChild}>
     {children}
-  </TooltipTrigger>
+  </TooltipTriggerPrimitive>
 );
 
 const TooltipContentComponent = ({
@@ -42,9 +44,9 @@ const TooltipContentComponent = ({
   align,
   children,
 }: TooltipContentComponentProps) => (
-  <TooltipContent side={side} align={align}>
+  <TooltipContentPrimitive side={side} align={align}>
     {children}
-  </TooltipContent>
+  </TooltipContentPrimitive>
 );
 
 export const Tooltip = {
