@@ -14,7 +14,7 @@ export const TextFieldComponent = () => {
     <div className="space-y-8">
       {/* Exemplo Básico */}
       <div>
-        <h3 className="text-sm font-medium text-gray-700 mb-2">Exemplo Básico</h3>
+        <h3 className="text-sm font-medium text-gray-700 dark:text-white mb-2">Exemplo Básico</h3>
         <TextField.Root>
           <TextField.Main.Root>
             <TextField.Main.Label>
@@ -39,7 +39,7 @@ export const TextFieldComponent = () => {
 
       {/* Exemplo com Validação */}
       <div>
-        <h3 className="text-sm font-medium text-gray-700 mb-2">Com Validação</h3>
+        <h3 className="text-sm font-medium text-gray-700 dark:text-white mb-2">Com Validação</h3>
         <TextField.Root>
           <TextField.Main.Root>
             <TextField.Main.Label>
@@ -68,7 +68,7 @@ export const TextFieldComponent = () => {
 
       {/* Exemplo Pré-preenchido */}
       <div>
-        <h3 className="text-sm font-medium text-gray-700 mb-2">Pré-preenchido</h3>
+        <h3 className="text-sm font-medium text-gray-700 dark:text-white mb-2">Pré-preenchido</h3>
         <TextField.Root>
           <TextField.Main.Root>
             <TextField.Main.Label>
@@ -95,7 +95,7 @@ export const TextFieldComponent = () => {
 
       {/* Exemplo com Campo de Senha */}
       <div>
-        <h3 className="text-sm font-medium text-gray-700 mb-2">Campo de Senha</h3>
+        <h3 className="text-sm font-medium text-gray-700 dark:text-white mb-2">Campo de Senha</h3>
         <TextField.Root>
           <TextField.Main.Root>
             <TextField.Main.Label>

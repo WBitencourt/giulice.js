@@ -16,8 +16,8 @@ const interMono = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "React next components",
-  description: "React next components",
+  title: "Giulice.js",
+  description: "Biblioteca de componentes React para Next.js",
 };
 
 export default function RootLayout({
