@@ -2,7 +2,7 @@
 
 import React, { ComponentProps, useEffect } from 'react';
 import { twMerge } from 'tailwind-merge';
-import useContext from '../../../contexts';
+import useContext from '../../contexts';
 import { maskCnpj, maskCpf, maskCpfCnpj, maskCurrencyBRL, maskDateTime, maskEmail, maskPhone } from '@/utils/masks';
 
 export type TypeMaskTextField = 'cnpj' | 'cpf' | 'cpf-cnpj' | 'phone' | 'currency-br' | 'email' | 'date-time' | undefined;
@@ -13,7 +13,7 @@ export interface InputProps extends Omit<ComponentProps<'input'>, 'onChange'> {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>, value: string) => void;
 }
 
-const InputFieldPrimitive = ({
+const InputPrimitive = ({
   id,
   type = 'text',
   typeMask,
@@ -116,20 +116,4 @@ const InputFieldPrimitive = ({
   )
 }
 
-export const InputField = InputFieldPrimitive;
-
-// export const InputField = React.memo(InputFieldPrimitive, (prevProps, nextProps) => {
-//   //O React.memo foi utilizado para evitar renderizações desnecessárias no InputField, 
-//   //causadas pelo DatePicker disparar o evento onChange do input mesmo quando o valor não foi alterado. 
-//   //A comparação personalizada previne que o componente seja re-renderizado sem necessidade.
-//   return (
-//     prevProps?.onChange?.toString() === nextProps?.onChange?.toString() && 
-//     prevProps?.onKeyDown?.toString() === nextProps?.onKeyDown?.toString() && 
-//     prevProps?.value === nextProps?.value &&
-//     prevProps?.name === nextProps?.name && 
-//     prevProps?.id === nextProps?.id
-//   );
-// });
-
-
-//export const InputField = ({ ...props }: React.ComponentProps<'input'>) => <input {...props} />
+export const Input = InputPrimitive;

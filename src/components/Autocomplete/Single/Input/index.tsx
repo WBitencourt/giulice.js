@@ -100,23 +100,21 @@ export const AutocompleteSingleInput = ({
 
   return (
     <TextField.Root className="w-full">
-      <TextField.Main.Root>
-        <TextField.Main.Label>
+      <TextField.Content.Root>
+        <TextField.Content.Label>
           { label }
-        </TextField.Main.Label>
-        <TextField.Main.Input.Root>
-          <TextField.Main.Input.Field 
-            {...props}
-            type="text" 
-            //typeMask={typeMask}
-            onChange={handleOnChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            onKeyDown={handleKeyDown}
-            value={selectedOptionContext?.label}
-          />
-        </TextField.Main.Input.Root>
-      </TextField.Main.Root>
+        </TextField.Content.Label>
+        <TextField.Content.Input 
+          {...props}
+          type="text" 
+          //typeMask={typeMask}
+          onChange={handleOnChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+          value={selectedOptionContext?.label}
+        />
+      </TextField.Content.Root>
       <TextField.Button.Root>
         <TextField.Button.Clean 
           onClick={handleClean} 

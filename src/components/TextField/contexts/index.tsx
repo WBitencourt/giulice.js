@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useCallback, useContext as useContextPrimitive, useRef, useState } from 'react';
+import { createContext, useCallback, useContext as useContextPrimitive, useId, useRef, useState } from 'react';
 
 export type Value = string | number | readonly string[] | undefined;
 
@@ -31,7 +31,7 @@ const Context = createContext<ContextProps>({} as ContextProps);
 export const Provider = ({ highlight = false, children, ...props }: ProviderRootProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const [inputID, setInputID] = useState<string>(`input-${Math.random().toString()}`);
+  const [inputID, setInputID] = useState<string>(useId());
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [hasValue, setHasValue] = useState(false);

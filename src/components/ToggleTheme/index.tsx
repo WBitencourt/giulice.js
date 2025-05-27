@@ -5,6 +5,7 @@ import { Sun, Moon }  from "lucide-react";
 import { HtmlHTMLAttributes, useEffect } from "react";
 import { useThemeStore } from "@/zustand-store/theme.store";
 import { useShallow } from "zustand/react/shallow";
+import { cn } from "@/utils/classname";
 
 interface ToggleThemeRootProps extends HtmlHTMLAttributes<HTMLDivElement> {
   children: React.ReactNode | React.ReactNode[],
@@ -34,7 +35,7 @@ function ToggleThemeStartRoot({ children, ...props }: ToggleThemeRootProps) {
   )
 }
 
-function ToggleThemeRoot({ children, className, overRideCSSClass, ...props }: ToggleThemeRootProps) { 
+function ToggleThemeRoot({ children, className, ...props }: ToggleThemeRootProps) { 
   const { toggleTheme } = useThemeStore(
     useShallow((state) => ({
       toggleTheme: state.toggleTheme,
@@ -44,7 +45,7 @@ function ToggleThemeRoot({ children, className, overRideCSSClass, ...props }: To
   return (
     <div 
       {...props}
-      className={overRideCSSClass ? className : `flex flex-1 ${className}`} 
+      className={cn('cursor-pointer', className)} 
       onClick={toggleTheme}
     >
       {children}

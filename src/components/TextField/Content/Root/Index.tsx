@@ -8,7 +8,7 @@ export interface TextFieldRootProps extends ComponentProps<'div'> {
   visible?: boolean;
 }
 
-export const MainRoot = ({ 
+export const ContentRoot = ({ 
   visible = true, 
   className, 
   children, 

@@ -1,9 +1,10 @@
 'use client'
 
-import * as Icon from '@phosphor-icons/react';
 import { ComponentProps } from 'react';
 import { twMerge } from 'tailwind-merge';
-import useContext from '../../../contexts';
+import useContext from '../contexts';
+import { Eye } from 'lucide-react';
+import { EyeClosed } from 'lucide-react';
 
 export const ButtonPasswordView = ({ onClick, className, type = 'button', ...props}: ComponentProps<'button'> ) => {
   const { showPassword, toggleShowPassword } = useContext();
@@ -11,7 +12,7 @@ export const ButtonPasswordView = ({ onClick, className, type = 'button', ...pro
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     toggleShowPassword();
 
-    if(onClick) onClick(event);
+    onClick?.(event);
   }
 
   return (
@@ -23,14 +24,12 @@ export const ButtonPasswordView = ({ onClick, className, type = 'button', ...pro
     >
       {
         showPassword ? 
-        <Icon.Eye 
-          className="text-cyan-500 text-xl" 
-          weight='bold' 
+        <Eye 
+          className="text-cyan-500 h-4 w-4" 
         />
         :
-        <Icon.EyeClosed 
-          className="text-cyan-500 text-xl" 
-          weight='bold' 
+        <EyeClosed 
+          className="text-cyan-500 h-4 w-4" 
         />
       }
     </button>

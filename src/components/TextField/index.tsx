@@ -1,22 +1,18 @@
-import { Label } from './Main/Label';
-import { ButtonClipboard } from './Main/Input/Button/Clipboard';
-import { ButtonClean } from './Main/Input/Button/Clean';
-import { ButtonPasswordView } from './Main/Input/Button/PasswordView';
+import { Label } from './Content/Label';
+import { ButtonClipboard } from './Button/Clipboard';
+import { ButtonClean } from './Button/Clean';
+import { ButtonPasswordView } from './Button/PasswordView';
 import { ProviderRoot } from './Root';
-import { InputRoot } from './Main/Input/Root';
-import { InputField } from './Main/Input/Field';
-import { ButtonRoot } from './Main/Input/Button/Root';
-import { MainRoot } from './Main/Root/Index';
+import { Input } from './Content/Input';
+import { ButtonRoot } from './Button/Root';
+import { ContentRoot } from './Content/Root/Index';
 
 export const TextField = {
   Root: ProviderRoot,
-  Main: {
-    Root: MainRoot,
+  Content: {
+    Root: ContentRoot,
     Label,
-    Input: {
-      Root: InputRoot,
-      Field: InputField,
-    },
+    Input,
   },
   Button: {
     Root: ButtonRoot,

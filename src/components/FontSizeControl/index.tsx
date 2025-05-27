@@ -3,21 +3,20 @@ import { MinusCircle, PlusCircle } from "phosphor-react";
 import { HtmlHTMLAttributes } from "react";
 import { useFontSizeStore } from "@/zustand-store/font-size.store";
 import { useShallow } from "zustand/react/shallow";
+import { cn } from "@/utils/classname";
 
 interface FontSizeControlRootProps extends HtmlHTMLAttributes<HTMLDivElement> {
   children: React.ReactNode | React.ReactNode[],
-  overRideCSSClass?: boolean,
 }
 
 function FontSizeControlRoot({ 
   children, 
-  overRideCSSClass = false, 
   ...props
 }: FontSizeControlRootProps) {
   return (
     <div 
       {...props} 
-      className={`flex ${overRideCSSClass ? '' : props.className }`}
+      className={cn('flex', props.className)}
     >
       { children }
     </div>
@@ -39,7 +38,7 @@ function FontSizeControlActions() {
         <Tooltip.Trigger>
           <button 
             onClick={decreaseFontSize}
-            className="flex items-center justify-center h-8 w-8 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+            className="flex items-center justify-center h-8 w-8 rounded-full cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
             aria-label="Diminuir tamanho da fonte"
           >
             <MinusCircle className="h-4 w-4" weight="fill" />
@@ -56,7 +55,7 @@ function FontSizeControlActions() {
         <Tooltip.Trigger>
           <button 
             onClick={increaseFontSize}
-            className="flex items-center justify-center h-8 w-8 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+            className="flex items-center justify-center h-8 w-8 rounded-full cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
             aria-label="Aumentar tamanho da fonte"
           >
             <PlusCircle className="h-4 w-4" weight="fill" />

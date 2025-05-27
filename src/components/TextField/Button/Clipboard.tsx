@@ -1,11 +1,11 @@
 'use client'
 
 import { Tooltip } from '@/components/Tooltip';
-import * as Icon from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
-import { Value } from "../../../contexts";
+import { Value } from "../contexts";
 import { twMerge } from 'tailwind-merge';
 import { copyToClipBoard } from '@/utils/dom';
+import { CircleCheck, Copy } from 'lucide-react';
 
 interface ButtonClipboardProps extends React.ComponentProps<'button'> {
   value: Value;
@@ -19,11 +19,7 @@ export const ButtonClipboard = ({ value, type = 'button', className, onClick, ..
       copyToClipBoard(value?.toString());
       setShowCopied(true);
 
-      if(!onClick) {
-        return;
-      }
-
-      onClick(event);
+      onClick?.(event);
     } catch (error) {
       throw error
     }
@@ -50,14 +46,12 @@ export const ButtonClipboard = ({ value, type = 'button', className, onClick, ..
         >
           {
             showCopied ?
-            <Icon.CheckCircle 
-              className="text-green-500 hover:text-green-700 dark:hover:text-green-300 text-xl c4aa9042-ca7d-4326-ab46-6dcfefb3dea2" 
-              weight='bold' 
+            <CircleCheck 
+              className="text-green-500 hover:text-green-700 dark:hover:text-green-300 h-4 w-4" 
             />
             :
-            <Icon.CopySimple 
-              className="text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 text-xl transition duration-700 ease-in-out" 
-              weight='bold' 
+            <Copy 
+              className="text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 h-4 w-4 transition duration-700 ease-in-out"  
             />
           } 
         </button>

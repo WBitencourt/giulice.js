@@ -1,19 +1,19 @@
 import { Metadata } from "next";
-import { TextFieldComponent } from "./component";
+import { AutocompleteComponent } from "./component";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Giulice.js | TextField",
-  description: "Página de demonstração do componente TextField",
+  title: "Giulice.js | Autocomplete",
+  description: "Página de demonstração do componente Autocomplete",
 };
 
-export default function TextFieldPage() {
+export default function AutocompletePage() {
   return (
     <div className="min-h-screen w-full">
       <div className="w-full mx-auto py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b border-l border-r border-b border-t-none border-dashed border-zinc-200 dark:border-zinc-800">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
-            Componente TextField
+            Componente Autocomplete
           </h2>
           <p className="mt-3 text-xl text-gray-500">
             Demonstração interativa do componente de entrada de texto
@@ -26,11 +26,11 @@ export default function TextFieldPage() {
             <h2 className="text-lg font-medium text-white">Demonstração Básica</h2>
           </div>
           <div className="p-6 bg-white dark:bg-black border-b border-gray-200 dark:border-zinc-800">
-            <TextFieldComponent />
+            <AutocompleteComponent />
           </div>
           <div className="bg-white dark:bg-black px-6 py-4">
             <p className="text-sm text-gray-600 dark:text-gray-500">
-              Este é o componente TextField básico com funcionalidade de limpeza de campo.
+              Este é o componente Autocomplete básico com funcionalidade de limpeza de campo.
               Digite algo para testar a interatividade.
             </p>
           </div>
@@ -67,27 +67,37 @@ export default function TextFieldPage() {
 {
   `
 // Exemplo básico
-<TextField.Root>
-  <TextField.Content.Root>
-    <TextField.Content.Label>
-      Nome Completo
-    </TextField.Content.Label>
-    <TextField.Content.Input
-      placeholder="Digite seu nome"
-      value={value}
-      onChange={onChange}
-    />
-  </TextField.Content.Root>
-  <TextField.Button.Root>
-    <TextField.Button.Clean onClick={handleClear} />
-  </TextField.Button.Root>
-</TextField.Root>
-
-// Com botão de copiar
-<TextField.Button.Clipboard value={value} />
-
-// Com campo de senha
-<TextField.Button.Password onClick={togglePassword} />
+<Autocomplete.Single.Root
+  picklist={options}
+  selectedOption={selectedOption}
+  onOptionChange={setSelectedOption}
+  freeSolo={false}
+>
+  <Autocomplete.Single.Input
+    label="Label"
+    placeholder="Digite algo"
+    id="input-id"
+    name="input-name"
+  />
+  <Autocomplete.Single.PickList.Root>
+    <Autocomplete.Single.PickList.Bag>
+      {(bag) => (
+        <Autocomplete.Single.PickList.Container>
+          {bag.list.map((item, index) => (
+            <Autocomplete.Single.PickList.Item
+              key={item.value}
+              index={index}
+              item={item}
+            />
+          ))}
+        </Autocomplete.Single.PickList.Container>
+      )}
+    </Autocomplete.Single.PickList.Bag>
+    <Autocomplete.Single.PickList.Empty>
+      Nenhum item encontrado
+    </Autocomplete.Single.PickList.Empty>
+  </Autocomplete.Single.PickList.Root>
+</Autocomplete.Single.Root>
   `
 }
 </pre>

@@ -24,7 +24,6 @@ export const Label = ({ className, children, ...props }: ComponentProps<'label'>
         [
           'data-[highlight=true]:text-red-500',
           'data-[highlight=true]:dark:text-red-400',
-          //'absolute left-3',
           'pr-6 transition-all duration-300 ease-in-out truncate w-full max-w-[95%]',
           'text-zinc-400 cursor-text',
           'text-sm z-0',

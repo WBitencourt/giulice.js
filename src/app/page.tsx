@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8  w-full sm:w-7xl mx-auto border-l border-r border-b border-t-none border-dashed border-zinc-200 dark:border-zinc-800">
+    <div className="min-h-screen w-full py-12 px-4 sm:px-6 lg:px-8 mx-auto border-l border-r border-b border-t-none border-dashed border-zinc-200 dark:border-zinc-800">
       <div className="max-w-4xl mx-auto">
         {/* Cabeçalho */}
         <div className="text-center mb-12">

@@ -16,21 +16,19 @@ export const TextFieldComponent = () => {
       <div>
         <h3 className="text-sm font-medium text-gray-700 dark:text-white mb-2">Exemplo Básico</h3>
         <TextField.Root>
-          <TextField.Main.Root>
-            <TextField.Main.Label>
+          <TextField.Content.Root>
+            <TextField.Content.Label>
               Nome Completo
-            </TextField.Main.Label>
-            <TextField.Main.Input.Root>
-              <TextField.Main.Input.Field
-                id="input-basic"
-                name="input-basic"
-                placeholder="Digite seu nome completo"
-                type="text"
-                value={value1}
-                onChange={(e) => setValue1(e.target.value)}
-              />
-            </TextField.Main.Input.Root>
-          </TextField.Main.Root>
+            </TextField.Content.Label>
+            <TextField.Content.Input
+              id="input-basic"
+              name="input-basic"
+              placeholder="Digite seu nome completo"
+              type="text"
+              value={value1}
+              onChange={(e) => setValue1(e.target.value)}
+            />
+          </TextField.Content.Root>
           <TextField.Button.Root>
             <TextField.Button.Clean onClick={() => setValue1('')} />
           </TextField.Button.Root>
@@ -41,22 +39,20 @@ export const TextFieldComponent = () => {
       <div>
         <h3 className="text-sm font-medium text-gray-700 dark:text-white mb-2">Com Validação</h3>
         <TextField.Root>
-          <TextField.Main.Root>
-            <TextField.Main.Label>
+          <TextField.Content.Root>
+            <TextField.Content.Label>
               E-mail
-            </TextField.Main.Label>
-            <TextField.Main.Input.Root>
-              <TextField.Main.Input.Field
-                id="input-email"
-                name="input-email"
-                placeholder="Digite seu e-mail"
-                type="email"
-                value={value2}
-                onChange={(e) => setValue2(e.target.value)}
-                className={value2 && !value2.includes('@') ? 'border-red-500' : ''}
-              />
-            </TextField.Main.Input.Root>
-          </TextField.Main.Root>
+            </TextField.Content.Label>
+            <TextField.Content.Input
+              id="input-email"
+              name="input-email"
+              placeholder="Digite seu e-mail"
+              type="email"
+              value={value2}
+              onChange={(e) => setValue2(e.target.value)}
+              className={value2 && !value2.includes('@') ? 'border-red-500' : ''}
+            />
+          </TextField.Content.Root>
           <TextField.Button.Root>
             <TextField.Button.Clean onClick={() => setValue2('')} />
           </TextField.Button.Root>
@@ -70,21 +66,19 @@ export const TextFieldComponent = () => {
       <div>
         <h3 className="text-sm font-medium text-gray-700 dark:text-white mb-2">Pré-preenchido</h3>
         <TextField.Root>
-          <TextField.Main.Root>
-            <TextField.Main.Label>
+          <TextField.Content.Root>
+            <TextField.Content.Label>
               Descrição
-            </TextField.Main.Label>
-            <TextField.Main.Input.Root>
-              <TextField.Main.Input.Field
-                id="input-prefilled"
-                name="input-prefilled"
-                placeholder="Digite uma descrição"
-                type="text"
-                value={value3}
-                onChange={(e) => setValue3(e.target.value)}
-              />
-            </TextField.Main.Input.Root>
-          </TextField.Main.Root>
+            </TextField.Content.Label>
+            <TextField.Content.Input
+              id="input-prefilled"
+              name="input-prefilled"
+              placeholder="Digite uma descrição"
+              type="text"
+              value={value3}
+              onChange={(e) => setValue3(e.target.value)}
+            />
+          </TextField.Content.Root>
           <TextField.Button.Root>
             <TextField.Button.Clean onClick={() => setValue3('')} />
             <TextField.Button.Clipboard value={value3} onClick={() => navigator.clipboard.writeText(value3)} />
@@ -97,21 +91,19 @@ export const TextFieldComponent = () => {
       <div>
         <h3 className="text-sm font-medium text-gray-700 dark:text-white mb-2">Campo de Senha</h3>
         <TextField.Root>
-          <TextField.Main.Root>
-            <TextField.Main.Label>
+          <TextField.Content.Root>
+            <TextField.Content.Label>
               Senha
-            </TextField.Main.Label>
-            <TextField.Main.Input.Root>
-              <TextField.Main.Input.Field
-                id="input-password"
-                name="input-password"
-                placeholder="Digite sua senha"
-                type={showPassword ? "text" : "password"}
-                value={value4}
-                onChange={(e) => setValue4(e.target.value)}
-              />
-            </TextField.Main.Input.Root>
-          </TextField.Main.Root>
+            </TextField.Content.Label>
+            <TextField.Content.Input
+              id="input-password"
+              name="input-password"
+              placeholder="Digite sua senha"
+              type={showPassword ? "text" : "password"}
+              value={value4}
+              onChange={(e) => setValue4(e.target.value)}
+            />
+          </TextField.Content.Root>
           <TextField.Button.Root>
             <TextField.Button.Clean onClick={() => setValue4('')} />
             <TextField.Button.Password onClick={() => setShowPassword(!showPassword)} />
