@@ -1,43 +1,9 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import Header from "./Header";
+import "@/app/globals.css";
 
-import "./globals.css";
-import { Footer } from "./Footer";
-
-const interSans = Inter({
-  variable: "--font-inter-sans",
-  subsets: ["latin"],
-});
-
-const interMono = Inter({
-  variable: "--font-inter-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "Giulice.js",
-  description: "Biblioteca de componentes React para Next.js",
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface RootLayoutProps {
   children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <body
-        className={`${interSans.variable} ${interMono.variable} overflow-hidden h-screen antialiased `}
-      >
-        <div className="grid grid-rows-[auto_1fr_auto] h-screen">
-          <Header />
-          <main className="overflow-auto">
-            {children}
-          </main>
-          <Footer />
-        </div>
-      </body>
-    </html>
-  );
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
+  return children;
 }

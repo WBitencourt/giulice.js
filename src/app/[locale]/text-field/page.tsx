@@ -13,7 +13,7 @@ export default function TextFieldPage() {
       <div className="w-full mx-auto py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b border-l border-r border-b border-t-none border-dashed border-zinc-200 dark:border-zinc-800">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
-            Componente TextField
+            TextField
           </h2>
           <p className="mt-3 text-xl text-gray-500">
             Demonstração interativa do componente de entrada de texto

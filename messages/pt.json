@@ -1,0 +1,43 @@
+{
+  "greeting": {
+    "name": "Olá, {name}!"
+  },
+  "pages": {
+    "home": {
+      "title": "Giulice.js",
+      "subtitle": "Biblioteca de componentes React para Next.js",
+      "about": {
+        "title": "Sobre a Biblioteca",
+        "description1": "Esta biblioteca oferece componentes React.js, customizáveis e acessíveis para projetos Next.js.",
+        "description2": "Cada componente foi desenvolvido seguindo práticas de UI/UX como design patterns, acessibilidade e responsividade.",
+        "callToAction": "Explore os componentes abaixo para ver demonstrações interativas e exemplos de uso."
+      },
+      "components": {
+        "title": "Componentes Disponíveis",
+        "autocomplete": {
+          "title": "Autocomplete",
+          "description": "Componente de entrada de texto com autocompletar.",
+          "demo": "Ver demonstração"
+        },
+        "textfield": {
+          "title": "TextField",
+          "description": "Componente de entrada de texto customizável com suporte para labels, validação e botões auxiliares.",
+          "demo": "Ver demonstração"
+        },
+        "comingSoon": "Mais componentes em breve..."
+      },
+      "footer": {
+        "credits": "Desenvolvido por Wendell Bitencourt"
+      }
+    }
+  },
+  "header": {
+    "select": {
+      "placeholder": "Selecione o idioma",
+      "label": "Idioma"
+    }
+  },
+  "footer": {
+    "copyright": "Copyright © 2025. Todos os direitos reservados."
+  }
+}

@@ -28,46 +28,6 @@ export interface PickListEmptyFilteredProps {
   children?: string;
 }
 
-export const PickListBackup = () => {
-  const {
-    showPickList,
-    filteredPickList,
-    activeItemIndex,
-    onClickItemList
-  } = useContext();
-
-  if (!showPickList) {
-    return null;
-  }
-
-  if(filteredPickList.length) {
-    return (
-      <ul className="absolute border text-black border-zinc-400 bg-white dark:text-white dark:border-zinc-700 dark:bg-zinc-950 w-full mt-2 rounded-md shadow-lg z-10">
-        {
-          filteredPickList.map((item, index) => {
-            return (
-              <li
-                key={item.value}
-                data-selected={index === activeItemIndex}
-                className='cursor-pointer rounded-md p-2 data-[selected=true]:bg-zinc-200 dark:data-[selected=true]:bg-zinc-900'
-                onClick={() => onClickItemList(item)}
-              >
-                { item.label }
-              </li>
-            );
-          })
-        }
-      </ul>
-    )
-  }
-
-  return (
-    <div className="absolute border text-black border-orange-400 bg-white dark:text-white dark:border-orange-700 dark:bg-zinc-950 w-full mt-1 p-2 rounded-md shadow-lg z-10">
-      <em>Nenhuma opção encontrada</em>
-    </div>
-  )
-};
-
 export const PickListBag = ({ children }: PickListBagProps) => {
   const {
     filteredPickList,
