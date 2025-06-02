@@ -1,8 +1,8 @@
 'use client';
 
-import { Autocomplete } from "@/components/Autocomplete";
+import { Autocomplete } from "@/components/autocomplete";
 import { useState } from "react";
-import { SelectedOption } from "@/components/Autocomplete/Single/contexts";
+import { SelectedOption } from "@/components/autocomplete/single/contexts";
 
 export const AutocompleteComponent = () => {
   const [selectedOption1, setSelectedOption1] = useState<SelectedOption>(undefined);

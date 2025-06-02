@@ -1,6 +1,6 @@
 'use client';
 
-import { TextField } from "@/components/TextField";
+import { TextField } from "@/components/textfield";
 import { useState } from "react";
 
 export const TextFieldComponent = () => {

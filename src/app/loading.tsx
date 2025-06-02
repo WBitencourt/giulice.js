@@ -1,4 +1,4 @@
-import Backdrop from '@/components/Backdrop';
+import Backdrop from '@/components/backdrop';
 
 export default function Loading() {
   return <Backdrop /> 

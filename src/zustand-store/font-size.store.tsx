@@ -31,8 +31,8 @@ const increaseFontSize = (get: Get, set: Set) => () => {
   set({ fontSize: newSize });
   updateDOMFontSize(newSize);
   
-  destroyCookie(undefined, 'everest.font_size', { domain: `.${window.location.hostname}`, path: '/' });
-  setCookie(null, 'everest.font_size', String(newSize), { domain: `.${window.location.hostname}`, path: '/' });
+  destroyCookie(undefined, 'giulice.font_size', { domain: `.${window.location.hostname}`, path: '/' });
+  setCookie(null, 'giulice.font_size', String(newSize), { domain: `.${window.location.hostname}`, path: '/' });
 }
 
 const decreaseFontSize = (get: Get, set: Set) => () => {
@@ -44,13 +44,13 @@ const decreaseFontSize = (get: Get, set: Set) => () => {
   set({ fontSize: newSize });
   updateDOMFontSize(newSize);
   
-  destroyCookie(undefined, 'everest.font_size', { domain: `.${window.location.hostname}`, path: '/' });
-  setCookie(null, 'everest.font_size', String(newSize), { domain: `.${window.location.hostname}`, path: '/' });
+  destroyCookie(undefined, 'giulice.font_size', { domain: `.${window.location.hostname}`, path: '/' });
+  setCookie(null, 'giulice.font_size', String(newSize), { domain: `.${window.location.hostname}`, path: '/' });
 }
 
 const startFontSizeStore = (get: Get, set: Set) => () => {
   try {
-    const {'everest.font_size': cookieFontSize } = parseCookies();
+    const {'giulice.font_size': cookieFontSize } = parseCookies();
     
     if (cookieFontSize) {
       const fontSize = parseInt(cookieFontSize, 10);
@@ -65,14 +65,14 @@ const startFontSizeStore = (get: Get, set: Set) => () => {
     set({ fontSize: DEFAULT_FONT_SIZE });
     updateDOMFontSize(DEFAULT_FONT_SIZE);
     
-    destroyCookie(undefined, 'everest.font_size', { domain: `.${window.location.hostname}`, path: '/' });
-    setCookie(null, 'everest.font_size', String(DEFAULT_FONT_SIZE), { domain: `.${window.location.hostname}`, path: '/' });
+    destroyCookie(undefined, 'giulice.font_size', { domain: `.${window.location.hostname}`, path: '/' });
+    setCookie(null, 'giulice.font_size', String(DEFAULT_FONT_SIZE), { domain: `.${window.location.hostname}`, path: '/' });
   } catch {
     set({ fontSize: DEFAULT_FONT_SIZE });
     updateDOMFontSize(DEFAULT_FONT_SIZE);
     
-    destroyCookie(undefined, 'everest.font_size', { domain: `.${window.location.hostname}`, path: '/' });
-    setCookie(null, 'everest.font_size', String(DEFAULT_FONT_SIZE), { domain: `.${window.location.hostname}`, path: '/' });
+    destroyCookie(undefined, 'giulice.font_size', { domain: `.${window.location.hostname}`, path: '/' });
+    setCookie(null, 'giulice.font_size', String(DEFAULT_FONT_SIZE), { domain: `.${window.location.hostname}`, path: '/' });
   }
 }
 
