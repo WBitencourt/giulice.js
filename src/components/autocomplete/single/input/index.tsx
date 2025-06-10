@@ -1,10 +1,11 @@
 import { TextField } from "@/components/textfield";
 import * as Icon from "@phosphor-icons/react";
 import useContext from "../contexts";
+import { TypeMaskTextField } from "@/components/textfield/content/input";
 
 export interface AutocompleteSingleInputProps extends React.ComponentProps<'input'> {
   label: string;
-  typeMask?: '';
+  typeMask?: TypeMaskTextField;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
@@ -47,6 +48,7 @@ export const AutocompleteSingleInput = ({
 }: AutocompleteSingleInputProps) => {
 
   const { 
+    inputRef,
     showPickList,
     selectedOption: selectedOptionContext,
     onChangeInput,
@@ -96,8 +98,6 @@ export const AutocompleteSingleInput = ({
     }
   }
 
-  console.log('typeMask', typeMask);
-
   return (
     <TextField.Root className="w-full">
       <TextField.Content.Root>
@@ -106,8 +106,9 @@ export const AutocompleteSingleInput = ({
         </TextField.Content.Label>
         <TextField.Content.Input 
           {...props}
+          ref={inputRef}
           type="text" 
-          //typeMask={typeMask}
+          typeMask={typeMask}
           onChange={handleOnChange}
           onFocus={handleFocus}
           onBlur={handleBlur}

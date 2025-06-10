@@ -1,5 +1,6 @@
 import { cn } from "@/utils/classname";
 import useContext, { PickListItem } from "../contexts";
+import { createPortal } from "react-dom";
 
 export interface PickListBag {
   list: PickListItem[];
@@ -49,7 +50,7 @@ export const PickListRoot = ({ children }: PickListRootProps) => {
 };
 
 export const PickListUl = ({ children }: PickListUlProps) => {
-  const { showPickList, filteredPickList } = useContext();
+  const { showPickList, filteredPickList, picklistRef } = useContext();
 
   if (!showPickList) {
     return null;
@@ -59,18 +60,28 @@ export const PickListUl = ({ children }: PickListUlProps) => {
     return null
   }
 
-  return (
-    <ul className="absolute border text-black border-zinc-400 bg-white dark:text-white dark:border-zinc-700 dark:bg-zinc-950 w-full mt-2 rounded-md shadow-lg z-50">
+  console.log('refreshing', new Date().toISOString());
+
+  const Ul = () => (
+    <ul 
+      ref={picklistRef}
+      style={{
+        position: 'absolute',
+        zIndex: 10,
+      }}
+      className="border text-black border-zinc-400 bg-white dark:text-white dark:border-zinc-700 dark:bg-zinc-950 w-full mt-2 rounded-md shadow-lg z-50"
+    >
       { children }
     </ul>
   )
+
+  return createPortal(<Ul />, document.body)
 };
 
 export const PickListLi = ({ index, item, onClick }: PickListItemProps) => {
   const { activeItemIndex, onClickItemList } = useContext();
 
   const handleClick = () => {
-    console.log('PickListLi handleClick', item);
     onClickItemList(item);
 
     if(onClick) {

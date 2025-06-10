@@ -4,7 +4,7 @@
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { useEffect } from 'react';
-import { $generateHtmlFromNodes, $generateNodesFromDOM } from '@lexical/html';
+import { $generateNodesFromDOM } from '@lexical/html';
 import { $getRoot, $insertNodes } from 'lexical';
 
 type initialHtmlPluginProps = {
@@ -80,15 +80,11 @@ export default function InitialHtmlPlugin({ initialHtml }: initialHtmlPluginProp
       // Usar o HTML processado
       processedHtml = tempDiv.innerHTML;
       
-      console.log('HTML pré-processado para preservar alinhamento:', processedHtml);
-      
       // Continuar com o processo normal
       const parser = new DOMParser();
       const dom = parser.parseFromString(processedHtml, 'text/html');
       const nodes = $generateNodesFromDOM(editor, dom);
-      
-      console.log('initialHtmlAAAAAAAAAAAAAAAAAAAAA', initialHtml);
-      console.log('nodesAAAAAAAAAAAAAAAAAAAAAAA', nodes);
+
 
       // Limpa o conteúdo atual e insere os novos nós
       const root = $getRoot();
@@ -98,8 +94,7 @@ export default function InitialHtmlPlugin({ initialHtml }: initialHtmlPluginProp
       $insertNodes(nodes);
       
       // Gerar HTML depois de inserir os nós
-      const htmlOutput = $generateHtmlFromNodes(editor);
-      console.log('htmlOutputAAAAAAAAAAAAAAAAAAAAAAAAAAA', htmlOutput);
+      // const htmlOutput = $generateHtmlFromNodes(editor);
       
       // Aplicar novamente os formatos de forma explícita após inserir os nós
       setTimeout(() => {

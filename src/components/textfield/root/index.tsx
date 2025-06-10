@@ -32,7 +32,6 @@ const Root = ({ visible = true, className, children, ...props }: TextFieldRootPr
         'bg-white dark:bg-zinc-950 text-black dark:text-white bg-opacity-50',
         'hover:border-black hover:dark:border-white',
         'data-[input-focused=true]:outline-1 data-[input-focused=true]:outline-black data-[input-focused=true]:dark:outline-white',
-        //'data-[input-focused=true]:border-0 data-[input-focused=true]:hover:border-transparent',
         'data-[disabled=true]:bg-opacity-50 data-[disabled=true]:dark:bg-opacity-50',
       ].join(' '), className)}
     >

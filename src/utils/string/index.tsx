@@ -90,8 +90,6 @@ export function countNewlines(text: string | undefined) {
     }
   }
 
-  //console.log('newlineCount', newlineCount);
-
   return newlineCount;
 }
 

@@ -3,6 +3,7 @@
 import { Autocomplete } from "@/components/autocomplete";
 import { useState } from "react";
 import { SelectedOption } from "@/components/autocomplete/single/contexts";
+import { AutocompleteTest } from "@/components/autocomplete/portal-teste";
 
 export const AutocompleteComponent = () => {
   const [selectedOption1, setSelectedOption1] = useState<SelectedOption>(undefined);
@@ -142,6 +143,10 @@ export const AutocompleteComponent = () => {
           </Autocomplete.Single.PickList.Root>
         </Autocomplete.Single.Root>
         <p className="mt-1 text-sm text-gray-500">Selecione uma das opções pré-definidas ou digite uma nova.</p>
+      </div>
+
+      <div>
+        <AutocompleteTest />
       </div>
     </div>
   )

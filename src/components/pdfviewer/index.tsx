@@ -18,10 +18,8 @@ export function PDFViewer({ source = '', className, ...props }: PDFViewer) {
     )
   }
 
-  const baseUrl = `${window.location.origin}/everest/portal`;
+  const baseUrl = `${window.location.origin}`;
   const src = `${baseUrl}/pdfjs/web/viewer.html?file=${encodeURIComponent(source)}`;
-
-  // console.log('src', src);
 
   return (
     <iframe 

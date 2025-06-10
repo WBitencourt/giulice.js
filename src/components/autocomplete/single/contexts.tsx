@@ -1,4 +1,4 @@
-import { ComponentProps, createContext, forwardRef, useCallback, useContext as useContextPrimitive, useImperativeHandle, useMemo, useState } from 'react';
+import { ComponentProps, createContext, forwardRef, useCallback, useContext as useContextPrimitive, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 
 export type Value = string | number | readonly string[] | undefined;
 
@@ -7,6 +7,12 @@ export interface PickListItem {
   value: string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any,
+}
+
+export interface PicklistCoords {
+  top: number;
+  left: number;
+  width: number;
 }
 
 export type SelectedOption = PickListItem | undefined;
@@ -24,6 +30,8 @@ export interface AutocompleteSingleProps extends ComponentProps<'div'> {
 }
 
 export interface ContextProps {
+  inputRef: React.RefObject<HTMLInputElement | null>;
+  picklistRef: React.RefObject<HTMLUListElement | null>;
   showPickList: boolean;
   selectedOption: PickListItem | undefined;
   filteredPickList: PickListItem[];
@@ -46,8 +54,12 @@ const AutocompleteProvider = ({
   onOptionChange = () => {},
   ...props 
 }: AutocompleteSingleProps, ref: React.Ref<AutocompleteSingleHandles>) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const picklistRef = useRef<HTMLUListElement>(null);
+
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [showPickList, setShowPickList] = useState(false);
+
   const [inputValue, setInputValue] = useState('');
 
   const filteredPickList = useMemo(() => {
@@ -151,7 +163,6 @@ const AutocompleteProvider = ({
 
     setActiveItemIndex(newActiveItemIndex === -1 ? 0 : newActiveItemIndex);
     
-    //setFilteredPickList(picklist);
     setShowPickList(true);
   }, [picklist, selectedOption])
 
@@ -159,10 +170,38 @@ const AutocompleteProvider = ({
     teste: 'teste',
   }), []);
 
+  useEffect(() => {
+    const updatePosition = () => {
+      if (inputRef.current) {
+        const rect = inputRef.current.getBoundingClientRect();
+        
+        if(picklistRef.current) {
+          picklistRef.current.style.top = `${rect.bottom + 5}px`;
+          picklistRef.current.style.left = `${rect.left - 14}px`;
+          picklistRef.current.style.width = `${rect.width + 65}px`;
+        }
+      }
+    };
+  
+    if (showPickList) {
+      updatePosition();
+
+      window.addEventListener('scroll', updatePosition, true); // true = captura em todos os níveis
+      window.addEventListener('resize', updatePosition);
+
+      return () => {
+        window.removeEventListener('scroll', updatePosition, true);
+        window.removeEventListener('resize', updatePosition);
+      };
+    }
+  }, [showPickList, inputRef])
+
   return (
     <Context.Provider 
       { ...props } 
       value={{
+        inputRef,
+        picklistRef,
         showPickList,
         selectedOption,
         filteredPickList, 

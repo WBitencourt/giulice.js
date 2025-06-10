@@ -15,8 +15,8 @@ export function Header() {
   const t = useTranslations('header');
 
   const locales = [
-    { value: 'pt', label: '🇧🇷 Português (BR)' },
-    { value: 'en', label: '🇺🇸 English (US)' },
+    { value: 'pt', label: '🇧🇷 Português' },
+    { value: 'en', label: '🇺🇸 English' },
   ];
 
   const updatePathname = (newLocale: string) => {
@@ -31,7 +31,7 @@ export function Header() {
   }
 
   return (
-    <header className="flex gap-4 justify-center items-center self-center row-start-1 p-4 border-b border-dashed border-zinc-200 dark:border-zinc-800">
+    <header className="z-50 flex gap-4 justify-center items-center self-center row-start-1 p-4 border-b border-dashed border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
       <div>
         <ToggleTheme.Root>
           <ToggleTheme.Icon />

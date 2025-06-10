@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function AutocompletePage() {
   return (
-    <div className="min-h-screen w-full">
-      <div className="w-full mx-auto py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b border-l border-r border-b border-t-none border-dashed border-zinc-200 dark:border-zinc-800">
+    <div className="min-h-screen w-full py-12 px-4 sm:px-6 lg:px-8 mx-auto border-l border-r border-b border-t-none border-dashed border-zinc-200 dark:border-zinc-800">
+      <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
             Autocomplete

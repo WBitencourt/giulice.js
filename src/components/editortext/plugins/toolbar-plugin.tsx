@@ -67,9 +67,8 @@ export default function ToolbarPlugin({ readOnly }: { readOnly: boolean }) {
           const format = (element as unknown as { getFormat: () => string }).getFormat?.() || 'left';
           setTextAlignment(format as 'left' | 'center' | 'right' | 'justify');
         }
-      } catch (e) {
+      } catch {
         // Se houver erro, mantém o alinhamento padrão
-        console.log('Erro ao determinar alinhamento:', e);
       }
     }
   }, []);

@@ -13,8 +13,21 @@ export interface InputProps extends Omit<ComponentProps<'input'>, 'onChange'> {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>, value: string) => void;
 }
 
+function mergeRefs(...refs: React.Ref<HTMLInputElement>[]) {
+  return (value: HTMLInputElement | null) => {
+    refs.forEach(ref => {
+      if (typeof ref === 'function') {
+        ref(value);
+      } else if (ref != null) {
+        ref.current = value;
+      }
+    });
+  };
+}
+
 const InputPrimitive = ({
   id,
+  ref,
   type = 'text',
   typeMask,
   value = '',
@@ -94,7 +107,7 @@ const InputPrimitive = ({
     <input
       { ...props }
       id={inputID}
-      ref={inputRef}
+      ref={ mergeRefs(ref ?? null, inputRef) }
       type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
       disabled={disabled}
       data-disabled={disabled} 
