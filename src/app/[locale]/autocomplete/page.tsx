@@ -3,7 +3,7 @@ import { AutocompleteComponent } from "./component";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "giulice.js | Autocomplete",
+  title: "Giulice.js | Autocomplete",
   description: "Página de demonstração do componente Autocomplete",
 };
 

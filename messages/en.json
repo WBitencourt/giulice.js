@@ -4,7 +4,7 @@
   },
   "pages": {
     "home": {
-      "title": "giulice.js",
+      "title": "Giulice.js",
       "subtitle": "React component library for Next.js",
       "about": {
         "title": "About the Library",

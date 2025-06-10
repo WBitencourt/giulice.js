@@ -23,7 +23,7 @@ const interMono = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "giulice.js",
+  title: "Giulice.js",
   description: "Biblioteca de componentes React para Next.js",
 };
 
