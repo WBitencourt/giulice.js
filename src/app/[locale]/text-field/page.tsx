@@ -3,7 +3,7 @@ import { TextFieldComponent } from "./component";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Giulice.js | TextField",
+  title: "giulice.js | TextField",
   description: "Página de demonstração do componente TextField",
 };
 

@@ -4,7 +4,7 @@ import { Link as LinkIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export const metadata: Metadata = {
-  title: "Giulice.js",
+  title: "giulice.js",
   description: "Biblioteca de componentes React para Next.js",
 };
 

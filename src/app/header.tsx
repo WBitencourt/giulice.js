@@ -62,7 +62,7 @@ export function Header() {
         </Select>
       </div>
       <h1 className="text-center text-2xl/6 w-full text-black dark:text-white">
-        Giulice.js
+        giulice.js
       </h1>
       <div>
         <FontSizeControl.Root>
