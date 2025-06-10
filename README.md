@@ -1,23 +1,17 @@
-![Giulice.js Cover](https://via.placeholder.com/1200x400/6366f1/ffffff?text=Giulice.js)
-
 # 🚀 Giulice.js (Under Development)
 
 > A custom React component library built for learning and personal project use
 
-[![Demo](https://img.shields.io/badge/Demo-View-blue)](https://seu-link-de-demo.vercel.app)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Next.js](https://img.shields.io/badge/Next.js-15.3.2-black)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.0.0-blue)](https://reactjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
+<br>
 
-## 📖 About the Project
+![image](https://github.com/user-attachments/assets/d002ccf7-b914-4cdb-9329-f98ff30b55d8)
 
-**Giulice.js** is a custom React component library developed with the goal of:
 
-- 🎯 **Creating custom components** - Building a collection of reusable and customizable components
-- 📚 **Learning by doing** - Exploring advanced React, TypeScript and component design concepts
-- 🔧 **Future use** - Having a solid foundation of components for personal projects
-- 🎨 **Experimentation** - Testing different design patterns and component architectures
+<br>
+
+**🔗 [View project online](https://giulice-cukwjl5te-wendell-bitencourts-projects.vercel.app/pt)**
+
+<br>
 
 ## ✨ Available Components
 
@@ -26,8 +20,8 @@
 - 👤 **Avatar** - Profile picture and initials display
 - 🏷️ **Badge** - Labels and visual indicators
 - 🍞 **Breadcrumbs** - Hierarchical navigation
-- 🔲 **Button 2.0** - Modern and customizable buttons
-- ☑️ **Checkbox 2.0** - Advanced selection boxes
+- 🔲 **Button** - Modern and customizable buttons
+- ☑️ **Checkbox** - Advanced selection boxes
 - 📋 **Clipboard** - Copy/paste functionality
 - ⏰ **Countdown** - Countdown timer
 - 📅 **DatePicker** - Date selector
@@ -38,12 +32,6 @@
 - 🔄 **Toggle Theme** - Theme switcher
 - 💬 **Tooltip** - Contextual tips
 - And much more...
-
-## 🔗 Demo
-
-🎉 **[View Live Demo](https://seu-link-de-demo.vercel.app)**
-
-_Note: The demo link will be updated soon_
 
 ## 🚀 How to Run the Project
 
