@@ -9,7 +9,7 @@
 
 <br>
 
-**🔗 [View project online](https://withlove.wbitencourt.dev)**
+**🔗 [View project online](https://giulice-cukwjl5te-wendell-bitencourts-projects.vercel.app/pt)**
 
 <br>
 
